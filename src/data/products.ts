@@ -12,8 +12,8 @@ export const products: Product[] = [
     categorySlug: "camlock-couplings",
     name: "Camlock Coupling Type A",
     nameZh: "快速接头 A型",
-    image: "/images/products/camlock-couplings/type-a.png",
-    gallery: ["/images/products/camlock-couplings/type-a.png"],
+    image: "/images/products/camlock-couplings/type-a.jpg",
+    gallery: ["/images/products/camlock-couplings/type-a.jpg"],
     shortDescription:
       "Type A camlock coupling with female thread and male adapter. Quick connect/disconnect for reliable fluid transfer.",
     description:
@@ -135,8 +135,8 @@ export const products: Product[] = [
     categorySlug: "camlock-couplings",
     name: "Camlock Coupling Type F",
     nameZh: "快速接头 F型",
-    image: "/images/products/camlock-couplings/type-f.png",
-    gallery: ["/images/products/camlock-couplings/type-f.png"],
+    image: "/images/products/camlock-couplings/type-f.jpg",
+    gallery: ["/images/products/camlock-couplings/type-f.jpg"],
     shortDescription:
       "Type F camlock coupling with male thread and male adapter. Used for connecting to Type B or Type E female couplers in fluid transfer systems.",
     description:
@@ -665,8 +665,8 @@ export const products: Product[] = [
     categorySlug: "threaded-pipe-fittings",
     name: "Male × Female Threaded Coupling",
     nameZh: "内外丝接头",
-    image: "/images/products/threaded-fittings/male-female-coupling.png",
-    gallery: ["/images/products/threaded-fittings/male-female-coupling.png"],
+    image: "/images/products/threaded-fittings/male-female-coupling.jpg",
+    gallery: ["/images/products/threaded-fittings/male-female-coupling.jpg"],
     shortDescription:
       "Threaded coupling with male thread on one end and female thread on the other. Practical adapter for connecting different thread types.",
     description:
@@ -849,8 +849,8 @@ export const products: Product[] = [
     categorySlug: "high-pressure-fittings",
     name: "Forged High Pressure Threaded Coupling",
     nameZh: "锻钢高压内螺纹接头",
-    image: "/images/products/high-pressure-fittings/forged-hp-coupling.png",
-    gallery: ["/images/products/high-pressure-fittings/forged-hp-coupling.png"],
+    image: "/images/products/high-pressure-fittings/forged-hp-coupling.jpg",
+    gallery: ["/images/products/high-pressure-fittings/forged-hp-coupling.jpg"],
     shortDescription:
       "Forged steel high pressure coupling with female threaded ends. Rated for demanding hydraulic and industrial pressure applications up to 6000 psi.",
     description:
@@ -885,8 +885,8 @@ export const products: Product[] = [
     categorySlug: "high-pressure-fittings",
     name: "Forged High Pressure Threaded Union",
     nameZh: "锻钢高压内螺纹活接头",
-    image: "/images/products/high-pressure-fittings/forged-hp-union.png",
-    gallery: ["/images/products/high-pressure-fittings/forged-hp-union.png"],
+    image: "/images/products/high-pressure-fittings/forged-hp-union.jpg",
+    gallery: ["/images/products/high-pressure-fittings/forged-hp-union.jpg"],
     shortDescription:
       "Forged high pressure threaded union for easy disconnection in high-pressure lines. Three-piece design with metal-to-metal sealing.",
     description:
@@ -920,8 +920,8 @@ export const products: Product[] = [
     categorySlug: "high-pressure-fittings",
     name: "Forged High Pressure Elbow (Male × Female Thread)",
     nameZh: "锻钢高压内外螺纹弯头",
-    image: "/images/products/high-pressure-fittings/forged-hp-elbow-male-female.png",
-    gallery: ["/images/products/high-pressure-fittings/forged-hp-elbow-male-female.png"],
+    image: "/images/products/high-pressure-fittings/forged-hp-elbow-male-female.jpg",
+    gallery: ["/images/products/high-pressure-fittings/forged-hp-elbow-male-female.jpg"],
     shortDescription:
       "Forged high pressure elbow with male thread on one end and female thread on the other. 90-degree direction change for high-pressure lines.",
     description:
@@ -955,8 +955,8 @@ export const products: Product[] = [
     categorySlug: "high-pressure-fittings",
     name: "Forged High Pressure Threaded Tee",
     nameZh: "锻钢高压内螺纹三通",
-    image: "/images/products/high-pressure-fittings/forged-hp-tee.png",
-    gallery: ["/images/products/high-pressure-fittings/forged-hp-tee.png"],
+    image: "/images/products/high-pressure-fittings/forged-hp-tee.jpg",
+    gallery: ["/images/products/high-pressure-fittings/forged-hp-tee.jpg"],
     shortDescription:
       "Forged high pressure tee with female threaded ends. For branching high-pressure pipe runs with robust forged construction.",
     description:
@@ -990,8 +990,8 @@ export const products: Product[] = [
     categorySlug: "high-pressure-fittings",
     name: "Forged High Pressure Female Threaded Elbow",
     nameZh: "锻钢高压内螺纹弯头",
-    image: "/images/products/high-pressure-fittings/forged-hp-elbow-female.png",
-    gallery: ["/images/products/high-pressure-fittings/forged-hp-elbow-female.png"],
+    image: "/images/products/high-pressure-fittings/forged-hp-elbow-female.jpg",
+    gallery: ["/images/products/high-pressure-fittings/forged-hp-elbow-female.jpg"],
     shortDescription:
       "Forged high pressure elbow with female threads on both ends. 90-degree high-strength connection for demanding hydraulic and process applications.",
     description:

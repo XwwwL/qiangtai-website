@@ -27,6 +27,7 @@ export function ProductCard({ product, locale = "en" }: ProductCardProps) {
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="object-contain p-4 group-hover:scale-105 transition-transform duration-500"
+            loading="lazy"
           />
         ) : (
           <PlaceholderImage className="w-full h-full" />

@@ -101,7 +101,7 @@ export const productCategories: ProductCategory[] = [
       "Forged steel high pressure fittings rated up to 6000 psi. Includes threaded couplings, elbows, tees, and adapters for demanding hydraulic and industrial applications.",
     description:
       "Our high pressure fittings are forged from high-grade carbon steel and stainless steel for superior strength and durability. The range includes threaded couplings, elbows, tees, and adapters designed for pressures up to 6000 psi. Each fitting is forged, precision machined, and individually tested. Ideal for hydraulic systems, high-pressure fluid transfer, chemical injection, and offshore applications where reliable performance under extreme pressure is critical.",
-    image: "/images/products/high-pressure-fittings/forged-hp-coupling.png",
+    image: "/images/products/high-pressure-fittings/forged-hp-coupling.jpg",
     productCount: 5,
     features: [
       "Forged steel construction",
@@ -141,7 +141,7 @@ export const productCategories: ProductCategory[] = [
       "Quick-connect camlock couplings in Types A, B, C, D, E, and F. Ideal for rapid fluid transfer connections in industrial, agricultural, and chemical applications.",
     description:
       "Our camlock couplings (also known as cam and groove couplings) provide fast, reliable, and leak-free connections for fluid transfer. Available in Types A through F with various end configurations including male/female threaded, hose shank, and adapter styles. Manufactured from stainless steel, aluminum, and brass with precision cam arms for secure locking. Widely used in petroleum, chemical, agricultural, and food processing industries.",
-    image: "/images/products/camlock-couplings/type-a.png",
+    image: "/images/products/camlock-couplings/type-a.jpg",
     productCount: 5,
     features: [
       "Quick connect / disconnect",

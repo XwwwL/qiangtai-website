@@ -69,6 +69,7 @@ export function MegaMenu() {
                     width={56}
                     height={56}
                     className="object-contain"
+                    loading="lazy"
                   />
                 ) : (
                   <PlaceholderImage className="w-full h-full" label={cat.name} />
