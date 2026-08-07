@@ -73,7 +73,7 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
                     onClick={onClose}
                     className="block py-2 px-2 text-sm text-text-muted hover:text-tech-500 transition-colors rounded-lg hover:bg-teal-50/50"
                   >
-                    {locale === "zh" ? cat.nameZh : cat.name}
+                    {locale === "zh" ? cat.nameZh : locale === "ru" ? cat.nameRu || cat.name : cat.name}
                   </Link>
                 ))}
               </div>

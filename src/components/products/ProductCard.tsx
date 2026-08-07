@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import type { Product } from "@/types";
 import type { Locale } from "@/i18n/config";
+import { localized } from "@/lib/utils";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
 
 interface ProductCardProps {
@@ -11,8 +12,9 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product, locale = "en" }: ProductCardProps) {
-  const displayName = locale === "zh" ? product.nameZh : product.name;
-  const displayChinese = locale === "zh" ? product.name : product.nameZh;
+  const displayName = localized(product.name, product.nameZh, product.nameRu, locale);
+  const displayDesc = localized(product.shortDescription, product.shortDescriptionZh || "", product.shortDescriptionRu || "", locale);
+  const viewDetails = locale === "zh" ? "查看详情" : locale === "ru" ? "Подробнее" : "View Details";
 
   return (
     <div className="metallic-card rounded-xl overflow-hidden card-hover group">
@@ -41,15 +43,15 @@ export function ProductCard({ product, locale = "en" }: ProductCardProps) {
           {displayName}
         </Link>
         <p className="text-xs text-text-muted mt-1.5 line-clamp-2">
-          {product.shortDescription}
+          {displayDesc}
         </p>
         <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
-          <span className="text-xs text-text-muted">{displayChinese}</span>
+          <span className="text-xs text-text-muted">{product.name}</span>
           <Link
             href={`/${locale}/products/${product.categorySlug}/${product.slug}`}
             className="inline-flex items-center gap-1 text-xs font-semibold text-tech-500 hover:text-teal-600 transition-colors"
           >
-            {locale === "zh" ? "查看详情" : "View Details"}
+            {viewDetails}
             <ArrowRight size={12} />
           </Link>
         </div>

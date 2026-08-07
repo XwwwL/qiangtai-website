@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ArrowRight, Box } from "lucide-react";
 import type { ProductCategory } from "@/types";
 import type { Locale } from "@/i18n/config";
+import { localized } from "@/lib/utils";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
 
 interface CategoryCardProps {
@@ -11,7 +12,11 @@ interface CategoryCardProps {
 }
 
 export function CategoryCard({ category, locale = "en" }: CategoryCardProps) {
-  const displayName = locale === "zh" ? category.nameZh : category.name;
+  const displayName = localized(category.name, category.nameZh, category.nameRu, locale);
+  const displayDesc = localized(category.shortDescription, category.shortDescriptionZh, category.shortDescriptionRu, locale);
+  const countLabel = locale === "zh" ? "款产品" : locale === "ru" ? "изделий" : "Products";
+  const comingSoon = locale === "zh" ? "即将推出" : locale === "ru" ? "Скоро" : "Coming Soon";
+  const viewLabel = locale === "zh" ? "查看产品" : locale === "ru" ? "Смотреть" : "View Products";
 
   return (
     <div className="metallic-card rounded-xl overflow-hidden card-hover group flex flex-col">
@@ -37,8 +42,8 @@ export function CategoryCard({ category, locale = "en" }: CategoryCardProps) {
           <Box size={16} className="text-tech-500" />
           <span className="text-xs text-text-muted">
             {category.productCount > 0
-              ? `${category.productCount}+ ${locale === "zh" ? "款产品" : "Products"}`
-              : locale === "zh" ? "即将推出" : "Coming Soon"}
+              ? `${category.productCount}+ ${countLabel}`
+              : comingSoon}
           </span>
         </div>
         <Link
@@ -48,13 +53,13 @@ export function CategoryCard({ category, locale = "en" }: CategoryCardProps) {
           {displayName}
         </Link>
         <p className="text-xs text-text-muted mt-2 line-clamp-2 flex-1">
-          {category.shortDescription}
+          {displayDesc}
         </p>
         <Link
           href={`/${locale}/products/${category.slug}`}
           className="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-tech-500 hover:text-teal-600 transition-colors"
         >
-          {locale === "zh" ? "查看产品" : "View Products"}
+          {viewLabel}
           <ArrowRight size={14} />
         </Link>
       </div>

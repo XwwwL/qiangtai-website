@@ -1,5 +1,5 @@
 // ── Locale ────────────────────────────────────────────────────
-export type Locale = "en" | "zh";
+export type Locale = "en" | "zh" | "ru";
 
 // ── Product Category ──────────────────────────────────────────
 export interface ProductCategory {
@@ -7,16 +7,33 @@ export interface ProductCategory {
   slug: string;
   name: string;
   nameZh: string;
+  nameRu: string;
   shortDescription: string;
+  shortDescriptionZh: string;
+  shortDescriptionRu: string;
   description: string;
+  descriptionZh: string;
+  descriptionRu: string;
   image: string | null;
   productCount: number;
   features: string[];
+  featuresZh: string[];
+  featuresRu: string[];
   materials: string[];
+  materialsZh: string[];
+  materialsRu: string[];
   connectionTypes: string[];
+  connectionTypesZh: string[];
+  connectionTypesRu: string[];
   applications: string[];
+  applicationsZh: string[];
+  applicationsRu: string[];
   seoTitle: string;
+  seoTitleZh: string;
+  seoTitleRu: string;
   seoDescription: string;
+  seoDescriptionZh: string;
+  seoDescriptionRu: string;
   hasRealImages: boolean;
 }
 
@@ -27,19 +44,36 @@ export interface Product {
   categorySlug: string;
   name: string;
   nameZh: string;
+  nameRu?: string;
   image: string | null;
   gallery: string[];
   shortDescription: string;
+  shortDescriptionZh?: string;
+  shortDescriptionRu?: string;
   description: string;
+  descriptionZh?: string;
+  descriptionRu?: string;
   features: string[];
+  featuresZh?: string[];
+  featuresRu?: string[];
   materials: string[];
+  materialsZh?: string[];
+  materialsRu?: string[];
   sizes: string[];
   connectionType: string;
   applications: string[];
+  applicationsZh?: string[];
+  applicationsRu?: string[];
   packaging: string;
+  packagingZh?: string;
+  packagingRu?: string;
   customizable: boolean;
   seoTitle: string;
+  seoTitleZh?: string;
+  seoTitleRu?: string;
   seoDescription: string;
+  seoDescriptionZh?: string;
+  seoDescriptionRu?: string;
 }
 
 // ── Site Config ───────────────────────────────────────────────

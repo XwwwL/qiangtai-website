@@ -1,3 +1,20 @@
+import type { Locale } from "@/types";
+
+/** Get localized text: en fallback if zh/ru missing */
+export function localized(en: string, zh?: string, ru?: string, locale?: Locale): string {
+  const l = locale || "en";
+  if (l === "zh" && zh) return zh;
+  if (l === "ru") return ru || zh || en;
+  return en;
+}
+
+/** Get localized string array */
+export function localizedArr(enArr: string[], zhArr: string[], ruArr: string[], locale: Locale): string[] {
+  if (locale === "zh" && zhArr.length > 0) return zhArr;
+  if (locale === "ru" && ruArr.length > 0) return ruArr;
+  return enArr;
+}
+
 /**
  * Merge Tailwind CSS class names with conflict resolution
  */

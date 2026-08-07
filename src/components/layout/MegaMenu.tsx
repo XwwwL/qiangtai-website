@@ -77,7 +77,7 @@ export function MegaMenu() {
               </div>
               <div className="min-w-0">
                 <p className="text-sm font-semibold text-navy-900 group-hover:text-tech-500 transition-colors leading-tight">
-                  {locale === "zh" ? cat.nameZh : cat.name}
+                  {locale === "zh" ? cat.nameZh : locale === "ru" ? cat.nameRu || cat.name : cat.name}
                 </p>
                 <p className="text-xs text-text-muted mt-0.5 line-clamp-2">
                   {cat.shortDescription.slice(0, 80)}...
