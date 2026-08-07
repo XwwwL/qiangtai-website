@@ -85,7 +85,6 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
             { key: "qualityControl" as const, href: `/${locale}/quality-control` },
             { key: "applications" as const, href: `/${locale}/applications` },
             { key: "aboutUs" as const, href: `/${locale}/about` },
-            { key: "contact" as const, href: `/${locale}/contact` },
           ].map((item) => (
             <Link
               key={item.href}
@@ -102,7 +101,7 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
             onClick={onClose}
             className="block mt-4 py-3 px-4 text-sm font-semibold text-white bg-tech-500 hover:bg-teal-600 rounded-lg text-center transition-colors"
           >
-            {dict.nav.requestQuote}
+            {dict.nav.contact}
           </Link>
 
           {/* Language switch */}

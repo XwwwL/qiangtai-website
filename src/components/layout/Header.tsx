@@ -92,12 +92,6 @@ export function Header() {
             >
               {dict.nav.aboutUs}
             </Link>
-            <Link
-              href={`/${locale}/contact`}
-              className="px-2 xl:px-3 py-7 text-sm font-medium text-navy-900 hover:text-tech-500 transition-colors"
-            >
-              {dict.nav.contact}
-            </Link>
           </nav>
 
           {/* Actions */}
@@ -135,7 +129,7 @@ export function Header() {
               href={`/${locale}/contact`}
               className="hidden sm:inline-flex items-center px-3 xl:px-4 py-2 text-sm font-semibold text-white bg-tech-500 hover:bg-teal-600 rounded-lg transition-colors whitespace-nowrap"
             >
-              {dict.nav.requestQuote}
+              {dict.nav.contact}
             </Link>
 
             {/* Mobile toggle */}
