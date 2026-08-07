@@ -76,6 +76,8 @@ export function createTransporter(config: SmtpConfig, options?: { altPort?: numb
     connectionTimeout: 8000,
     greetingTimeout: 8000,
     socketTimeout: 8000,
+    debug: true,
+    logger: true,
     tls: {
       rejectUnauthorized: false,
       minVersion: "TLSv1.2" as const,
@@ -331,6 +333,17 @@ export async function sendInquiryEmail(inquiry: InquiryData): Promise<{
     try {
       const transporter = createTransporter(config, { altPort: port });
 
+      // Verify connection first
+      console.log(`[SMTP] → Verifying connection to ${config.host}:${port}...`);
+      const verifyOk = await verifySmtpConnection(transporter);
+      console.log(`[SMTP]   Verify: ${verifyOk ? "OK ✅" : "FAILED ❌"}`);
+      if (!verifyOk) {
+        console.error(`[SMTP]   Connection verify failed — skipping sendMail`);
+        lastError = "SMTP connection verify failed";
+        continue;
+      }
+
+      console.log(`[SMTP] → Sending mail to [${recipients.join(", ")}]...`);
       const info = await transporter.sendMail({
         from: { name: config.fromName, address: config.user },
         to: recipients,
@@ -341,6 +354,9 @@ export async function sendInquiryEmail(inquiry: InquiryData): Promise<{
       });
 
       console.log(`[SMTP] ✅ Sent via ${config.host}:${port} — MessageId: ${info.messageId}`);
+      console.log(`[SMTP]   Accepted: [${(info.accepted || []).join(", ")}]`);
+      console.log(`[SMTP]   Rejected: [${(info.rejected || []).join(", ")}]`);
+      console.log(`[SMTP]   Response: ${info.response}`);
       return {
         success: true,
         messageId: info.messageId,
@@ -348,8 +364,19 @@ export async function sendInquiryEmail(inquiry: InquiryData): Promise<{
         rejected: info.rejected as string[],
       };
     } catch (err) {
-      lastError = (err as Error).message;
-      console.error(`[SMTP] ✗ ${config.host}:${port} failed: ${lastError}`);
+      const e = err as Error & { code?: string; command?: string; response?: string; responseCode?: number; stack?: string };
+      console.error(`[SMTP] ✗ ERROR DETAILS:`);
+      console.error(`[SMTP]   message:   ${e.message}`);
+      console.error(`[SMTP]   code:      ${e.code || "N/A"}`);
+      console.error(`[SMTP]   command:   ${e.command || "N/A"}`);
+      console.error(`[SMTP]   response:  ${e.response || "N/A"}`);
+      console.error(`[SMTP]   responseCode: ${e.responseCode ?? "N/A"}`);
+      if (e.stack) {
+        // Print first 3 lines of stack
+        const stackLines = e.stack.split("\n").slice(0, 3).join("\n");
+        console.error(`[SMTP]   stack:     ${stackLines}`);
+      }
+      lastError = e.message;
     }
   }
 
