@@ -317,68 +317,57 @@ export async function sendInquiryEmail(inquiry: InquiryData): Promise<{
     return { success: false, error: "No recipients configured (RECIPIENT_EMAILS)" };
   }
 
-  // Try primary port first, then fallback to alt port (587)
-  const ports = [config.port];
-  const altPort = Number(process.env.SMTP_PORT_ALT) || 0;
-  if (altPort && altPort !== config.port) ports.push(altPort);
-  // Auto-fallback: if primary is 465, also try 587
-  if (config.port === 465 && !altPort) ports.push(587);
+  const transporter = createTransporter(config);
 
-  let lastError = "";
-
-  for (const port of ports) {
-    const isAlt = port !== config.port;
-    console.log(`[SMTP] Trying ${config.host}:${port} (secure: ${port === 465})${isAlt ? " [FALLBACK]" : ""}...`);
-
-    try {
-      const transporter = createTransporter(config, { altPort: port });
-
-      // Verify connection first
-      console.log(`[SMTP] → Verifying connection to ${config.host}:${port}...`);
-      const verifyOk = await verifySmtpConnection(transporter);
-      console.log(`[SMTP]   Verify: ${verifyOk ? "OK ✅" : "FAILED ❌"}`);
-      if (!verifyOk) {
-        console.error(`[SMTP]   Connection verify failed — skipping sendMail`);
-        lastError = "SMTP connection verify failed";
-        continue;
-      }
-
-      console.log(`[SMTP] → Sending mail to [${recipients.join(", ")}]...`);
-      const info = await transporter.sendMail({
-        from: { name: config.fromName, address: config.user },
-        to: recipients,
-        replyTo: { name: inquiry.fullName, address: inquiry.email },
-        subject: createInquirySubject(inquiry),
-        text: createInquiryText(inquiry),
-        html: createInquiryHtml(inquiry),
-      });
-
-      console.log(`[SMTP] ✅ Sent via ${config.host}:${port} — MessageId: ${info.messageId}`);
-      console.log(`[SMTP]   Accepted: [${(info.accepted || []).join(", ")}]`);
-      console.log(`[SMTP]   Rejected: [${(info.rejected || []).join(", ")}]`);
-      console.log(`[SMTP]   Response: ${info.response}`);
-      return {
-        success: true,
-        messageId: info.messageId,
-        accepted: info.accepted as string[],
-        rejected: info.rejected as string[],
-      };
-    } catch (err) {
-      const e = err as Error & { code?: string; command?: string; response?: string; responseCode?: number; stack?: string };
-      console.error(`[SMTP] ✗ ERROR DETAILS:`);
-      console.error(`[SMTP]   message:   ${e.message}`);
-      console.error(`[SMTP]   code:      ${e.code || "N/A"}`);
-      console.error(`[SMTP]   command:   ${e.command || "N/A"}`);
-      console.error(`[SMTP]   response:  ${e.response || "N/A"}`);
-      console.error(`[SMTP]   responseCode: ${e.responseCode ?? "N/A"}`);
-      if (e.stack) {
-        // Print first 3 lines of stack
-        const stackLines = e.stack.split("\n").slice(0, 3).join("\n");
-        console.error(`[SMTP]   stack:     ${stackLines}`);
-      }
-      lastError = e.message;
+  // Step 1: TCP + TLS connection
+  console.log(`[SMTP] → Step 1: Connecting to ${config.host}:${config.port} (SSL)...`);
+  try {
+    const verifyOk = await verifySmtpConnection(transporter);
+    if (!verifyOk) {
+      console.error(`[SMTP]   ❌ Connection FAILED`);
+      return { success: false, error: "SMTP connection failed" };
     }
+    console.log(`[SMTP]   ✅ Connection SUCCESS`);
+  } catch (err) {
+    const e = err as Error & { code?: string };
+    console.error(`[SMTP]   ❌ Connection ERROR: ${e.message} (code: ${e.code || "N/A"})`);
+    return { success: false, error: `Connection failed: ${e.message}` };
   }
 
-  return { success: false, error: `All ports failed: ${lastError}` };
+  // Step 2: AUTH + send
+  console.log(`[SMTP] → Step 2: Sending mail to [${recipients.join(", ")}]...`);
+  try {
+    const info = await transporter.sendMail({
+      from: { name: config.fromName, address: config.user },
+      to: recipients,
+      replyTo: { name: inquiry.fullName, address: inquiry.email },
+      subject: createInquirySubject(inquiry),
+      text: createInquiryText(inquiry),
+      html: createInquiryHtml(inquiry),
+    });
+
+    console.log(`[SMTP]   ✅ Send SUCCESS`);
+    console.log(`[SMTP]   MessageId: ${info.messageId}`);
+    console.log(`[SMTP]   Accepted:  [${(info.accepted || []).join(", ")}]`);
+    console.log(`[SMTP]   Rejected:  [${(info.rejected || []).join(", ")}]`);
+    console.log(`[SMTP]   Response:  ${info.response}`);
+    return {
+      success: true,
+      messageId: info.messageId,
+      accepted: info.accepted as string[],
+      rejected: info.rejected as string[],
+    };
+  } catch (err) {
+    const e = err as Error & { code?: string; command?: string; response?: string; responseCode?: number; stack?: string };
+    console.error(`[SMTP]   ❌ Send FAILED`);
+    console.error(`[SMTP]   message:      ${e.message}`);
+    console.error(`[SMTP]   code:         ${e.code || "N/A"}`);
+    console.error(`[SMTP]   command:      ${e.command || "N/A"}`);
+    console.error(`[SMTP]   response:     ${e.response || "N/A"}`);
+    console.error(`[SMTP]   responseCode: ${e.responseCode ?? "N/A"}`);
+    if (e.stack) {
+      console.error(`[SMTP]   stack:        ${e.stack.split("\n").slice(0, 2).join(" | ")}`);
+    }
+    return { success: false, error: `Send failed: ${e.message}` };
+  }
 }
