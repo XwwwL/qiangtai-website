@@ -6,6 +6,11 @@ import {
   type InquiryData,
 } from "@/lib/server/mailer";
 
+// Vercel: Node.js runtime required for Nodemailer (not Edge)
+export const runtime = "nodejs";
+// Vercel Pro: extend to 60s; Hobby plan caps at 10s regardless
+export const maxDuration = 30;
+
 const MAX_FIELD_LENGTH = 2000;
 const MAX_MESSAGE_LENGTH = 10000;
 

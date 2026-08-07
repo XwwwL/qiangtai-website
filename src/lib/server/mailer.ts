@@ -64,15 +64,22 @@ export function getSmtpConfig(): SmtpConfig | null {
   };
 }
 
-export function createTransporter(config: SmtpConfig): Transporter {
+export function createTransporter(config: SmtpConfig, options?: { altPort?: number }): Transporter {
+  const port = options?.altPort || config.port;
+  const isSecure = port === 465;
+
   return nodemailer.createTransport({
     host: config.host,
-    port: config.port,
-    secure: config.secure,
+    port,
+    secure: isSecure,
     auth: { user: config.user, pass: config.pass },
-    connectionTimeout: 10000,
-    greetingTimeout: 10000,
-    socketTimeout: 10000,
+    connectionTimeout: 8000,
+    greetingTimeout: 8000,
+    socketTimeout: 8000,
+    tls: {
+      rejectUnauthorized: false,
+      minVersion: "TLSv1.2" as const,
+    },
   });
 }
 
@@ -290,9 +297,17 @@ export async function sendInquiryEmail(inquiry: InquiryData): Promise<{
   rejected?: string[];
   error?: string;
 }> {
+  // Vercel-safe debug logging (never log passwords)
+  console.log(`[SMTP] SMTP_HOST=${process.env.SMTP_HOST || "MISSING"}`);
+  console.log(`[SMTP] SMTP_PORT=${process.env.SMTP_PORT || "MISSING"}`);
+  console.log(`[SMTP] SMTP_USER=${process.env.SMTP_USER ? "SET" : "MISSING"}`);
+  console.log(`[SMTP] SMTP_PASS=${(process.env.SMTP_PASSWORD || process.env.SMTP_PASS) ? "SET" : "MISSING"}`);
+  console.log(`[SMTP] RECIPIENT_EMAILS=${process.env.RECIPIENT_EMAILS || "MISSING"}`);
+  console.log(`[SMTP] EMAIL_DRY_RUN=${process.env.EMAIL_DRY_RUN || "unset"}`);
+
   const config = getSmtpConfig();
   if (!config) {
-    return { success: false, error: "SMTP not configured" };
+    return { success: false, error: "SMTP not configured — check SMTP_HOST, SMTP_USER, SMTP_PASS" };
   }
 
   const recipients = parseEmailList(process.env.RECIPIENT_EMAILS);
@@ -300,25 +315,43 @@ export async function sendInquiryEmail(inquiry: InquiryData): Promise<{
     return { success: false, error: "No recipients configured (RECIPIENT_EMAILS)" };
   }
 
-  try {
-    const transporter = createTransporter(config);
+  // Try primary port first, then fallback to alt port (587)
+  const ports = [config.port];
+  const altPort = Number(process.env.SMTP_PORT_ALT) || 0;
+  if (altPort && altPort !== config.port) ports.push(altPort);
+  // Auto-fallback: if primary is 465, also try 587
+  if (config.port === 465 && !altPort) ports.push(587);
 
-    const info = await transporter.sendMail({
-      from: { name: config.fromName, address: config.user },
-      to: recipients,
-      replyTo: { name: inquiry.fullName, address: inquiry.email },
-      subject: createInquirySubject(inquiry),
-      text: createInquiryText(inquiry),
-      html: createInquiryHtml(inquiry),
-    });
+  let lastError = "";
 
-    return {
-      success: true,
-      messageId: info.messageId,
-      accepted: info.accepted as string[],
-      rejected: info.rejected as string[],
-    };
-  } catch (err) {
-    return { success: false, error: (err as Error).message };
+  for (const port of ports) {
+    const isAlt = port !== config.port;
+    console.log(`[SMTP] Trying ${config.host}:${port} (secure: ${port === 465})${isAlt ? " [FALLBACK]" : ""}...`);
+
+    try {
+      const transporter = createTransporter(config, { altPort: port });
+
+      const info = await transporter.sendMail({
+        from: { name: config.fromName, address: config.user },
+        to: recipients,
+        replyTo: { name: inquiry.fullName, address: inquiry.email },
+        subject: createInquirySubject(inquiry),
+        text: createInquiryText(inquiry),
+        html: createInquiryHtml(inquiry),
+      });
+
+      console.log(`[SMTP] ✅ Sent via ${config.host}:${port} — MessageId: ${info.messageId}`);
+      return {
+        success: true,
+        messageId: info.messageId,
+        accepted: info.accepted as string[],
+        rejected: info.rejected as string[],
+      };
+    } catch (err) {
+      lastError = (err as Error).message;
+      console.error(`[SMTP] ✗ ${config.host}:${port} failed: ${lastError}`);
+    }
   }
+
+  return { success: false, error: `All ports failed: ${lastError}` };
 }
