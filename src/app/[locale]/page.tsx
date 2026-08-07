@@ -111,10 +111,10 @@ export default function HomePage({ params }: HomePageProps) {
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="grid grid-cols-2 gap-3">
-              <div className="relative aspect-[4/5] rounded-xl overflow-hidden"><Image src="/images/factory/a1484d99f7cbcb8964b8260a190fd3d8.jpg" alt="Factory" fill className="object-cover" sizes="(max-width: 1024px) 50vw, 25vw" /></div>
+              <div className="relative aspect-[4/5] rounded-xl overflow-hidden"><Image src="/images/factory/a1484d99f7cbcb8964b8260a190fd3d8.jpg" alt="Factory" fill className="object-cover" sizes="(max-width: 1024px) 50vw, 25vw" loading="lazy" /></div>
               <div className="flex flex-col gap-3">
-                <div className="relative aspect-[4/3] rounded-xl overflow-hidden"><Image src="/images/factory/image-8-2-16_54_21-1.png" alt="Production" fill className="object-cover" sizes="(max-width: 1024px) 50vw, 25vw" /></div>
-                <div className="relative aspect-[4/3] rounded-xl overflow-hidden"><Image src="/images/factory/image-8-2-16_54_23-2.png" alt="QC" fill className="object-cover" sizes="(max-width: 1024px) 50vw, 25vw" /></div>
+                <div className="relative aspect-[4/3] rounded-xl overflow-hidden"><Image src="/images/factory/image-8-2-16_54_21-1.jpg" alt="Production" fill className="object-cover" sizes="(max-width: 1024px) 50vw, 25vw" loading="lazy" /></div>
+                <div className="relative aspect-[4/3] rounded-xl overflow-hidden"><Image src="/images/factory/image-8-2-16_54_23-2.jpg" alt="QC" fill className="object-cover" sizes="(max-width: 1024px) 50vw, 25vw" loading="lazy" /></div>
               </div>
             </div>
             <div>

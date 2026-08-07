@@ -25,11 +25,11 @@ const capabilities = [
 
 const factoryImages = [
   { src: "/images/factory/a1484d99f7cbcb8964b8260a190fd3d8.jpg", alt: "Factory Workshop" },
-  { src: "/images/factory/image-8-2-16_54_21-1.png", alt: "Production Line" },
-  { src: "/images/factory/image-8-2-16_54_23-2.png", alt: "Quality Control" },
-  { src: "/images/factory/image-8-2-16_54_25-3.png", alt: "Machining Center" },
-  { src: "/images/factory/image-8-2-16_54_26-4.png", alt: "Assembly Area" },
-  { src: "/images/factory/image-8-2-16_54_27-5.png", alt: "Warehouse" },
+  { src: "/images/factory/image-8-2-16_54_21-1.jpg", alt: "Production Line" },
+  { src: "/images/factory/image-8-2-16_54_23-2.jpg", alt: "Quality Control" },
+  { src: "/images/factory/image-8-2-16_54_25-3.jpg", alt: "Machining Center" },
+  { src: "/images/factory/image-8-2-16_54_26-4.jpg", alt: "Assembly Area" },
+  { src: "/images/factory/image-8-2-16_54_27-5.jpg", alt: "Warehouse" },
 ];
 
 const capDescs = [
