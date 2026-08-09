@@ -4,7 +4,7 @@ import type { Locale } from "@/types";
 export function localized(en: string, zh?: string, ru?: string, locale?: Locale): string {
   const l = locale || "en";
   if (l === "zh" && zh) return zh;
-  if (l === "ru") return ru || zh || en;
+  if (l === "ru") return ru || en;
   return en;
 }
 
