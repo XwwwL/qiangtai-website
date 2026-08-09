@@ -9,7 +9,8 @@
     "lint": "eslint",
     "prepare-images": "node scripts/prepare-images.mjs",
     "test:email": "node scripts/test-email.mjs",
-    "test:inquiry": "node scripts/test-inquiry.mjs"
+    "test:inquiry": "node scripts/test-inquiry.mjs",
+    "check:i18n": "node scripts/check-product-i18n.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.28.0",
