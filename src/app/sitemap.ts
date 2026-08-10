@@ -1,59 +1,57 @@
-import { MetadataRoute } from "next";
-import { siteConfig } from "@/config/site";
+import type { MetadataRoute } from "next";
 import { productCategories } from "@/data/categories";
 import { products } from "@/data/products";
 
-const locales = ["en", "zh", "ru"];
-const staticPaths = ["", "/products", "/about", "/manufacturing", "/quality-control", "/applications", "/contact", "/privacy-policy"];
+const DOMAIN = "https://www.zj-qiangtai.com";
+const locales = ["en", "zh", "ru"] as const;
+
+const staticPaths = [
+  "/products",
+  "/manufacturing",
+  "/quality-control",
+  "/applications",
+  "/about",
+  "/contact",
+  "/privacy-policy",
+] as const;
+
+const buildDate = new Date();
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = siteConfig.siteUrl;
   const entries: MetadataRoute.Sitemap = [];
+  const seen = new Set<string>();
 
-  // Add x-default entries
-  for (const path of staticPaths) {
-    entries.push({
-      url: `${baseUrl}${path}`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: path === "" ? 1 : path === "/products" ? 0.9 : 0.7,
-    });
+  function add(url: string, priority: number, changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"]) {
+    if (seen.has(url)) return;
+    seen.add(url);
+    entries.push({ url, lastModified: buildDate, changeFrequency, priority });
   }
 
-  // Add locale-specific entries
   for (const locale of locales) {
-    const prefix = locale === "en" ? "" : `/${locale}`;
+    const prefix = `/${locale}`;
+
+    // Home
+    add(`${DOMAIN}${prefix}`, 1, "weekly");
 
     // Static pages
     for (const path of staticPaths) {
-      const urlPath = path === "" ? (prefix || "/") : `${prefix}${path}`;
-      const url = path === "" ? (prefix ? `${baseUrl}${prefix}` : baseUrl) : `${baseUrl}${prefix}${path}`;
-      entries.push({
-        url,
-        lastModified: new Date(),
-        changeFrequency: "weekly" as const,
-        priority: path === "" ? 1 : path === "/products" ? 0.9 : 0.7,
-      });
+      const priority =
+        path === "/products" ? 0.9
+        : path === "/privacy-policy" ? 0.3
+        : path === "/manufacturing" || path === "/quality-control" || path === "/applications" ? 0.7
+        : 0.6;
+      const freq = path === "/privacy-policy" ? "yearly" : path === "/products" ? "weekly" : "monthly";
+      add(`${DOMAIN}${prefix}${path}`, priority, freq);
     }
 
     // Category pages
     for (const cat of productCategories) {
-      entries.push({
-        url: `${baseUrl}${prefix}/products/${cat.slug}`,
-        lastModified: new Date(),
-        changeFrequency: "weekly" as const,
-        priority: 0.8,
-      });
+      add(`${DOMAIN}${prefix}/products/${cat.slug}`, 0.8, "weekly");
+    }
 
-      // Product pages
-      for (const p of products.filter((p) => p.categorySlug === cat.slug)) {
-        entries.push({
-          url: `${baseUrl}${prefix}/products/${p.categorySlug}/${p.slug}`,
-          lastModified: new Date(),
-          changeFrequency: "monthly" as const,
-          priority: 0.6,
-        });
-      }
+    // Product pages
+    for (const p of products) {
+      add(`${DOMAIN}${prefix}/products/${p.categorySlug}/${p.slug}`, 0.7, "monthly");
     }
   }
 
