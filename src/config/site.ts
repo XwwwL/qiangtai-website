@@ -40,7 +40,7 @@ export const siteConfig: SiteConfig = {
       "https://www.google.com/maps/dir/?api=1&destination=27.884339151323392%2C120.80763918556248",
   },
 
-  siteUrl: "https://www.zj-qt.com",
+  siteUrl: "https://www.zj-qiangtai.com",
   seo: {
     defaultTitle: "Pipe Fittings & Industrial Valve Manufacturer | CHANTI",
     titleTemplate: "%s | CHANTI - Pipe Fittings & Valve Manufacturer",
