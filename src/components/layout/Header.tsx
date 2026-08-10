@@ -3,20 +3,18 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, Search, X } from "lucide-react";
+import { Menu } from "lucide-react";
 import { MegaMenu } from "@/components/layout/MegaMenu";
 import { MobileMenu } from "@/components/layout/MobileMenu";
 import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 import { useDictionary, useLocale } from "@/hooks/useLocale";
 import { siteConfig } from "@/config/site";
-import type { Locale } from "@/i18n/config";
 
 export function Header() {
   const locale = useLocale();
   const dict = useDictionary();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -96,29 +94,6 @@ export function Header() {
 
           {/* Actions */}
           <div className="flex items-center gap-1.5 ml-auto">
-            {/* Search */}
-            {searchOpen && (
-              <div className="hidden md:flex items-center bg-gray-100 rounded-lg px-3 py-1.5">
-                <Search size={16} className="text-text-muted" />
-                <input
-                  type="text"
-                  placeholder={dict.nav.searchPlaceholder}
-                  className="bg-transparent border-none outline-none text-sm px-2 w-32 xl:w-48"
-                  autoFocus
-                />
-                <button onClick={() => setSearchOpen(false)} aria-label="Close search">
-                  <X size={14} className="text-text-muted" />
-                </button>
-              </div>
-            )}
-            <button
-              onClick={() => setSearchOpen(!searchOpen)}
-              className="hidden md:flex p-2 text-navy-900 hover:text-tech-500 transition-colors"
-              aria-label={dict.nav.search}
-            >
-              <Search size={18} />
-            </button>
-
             {/* Language Switcher */}
             <div className="hidden md:block">
               <LanguageSwitcher />
