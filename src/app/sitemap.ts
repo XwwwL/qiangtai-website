@@ -15,8 +15,6 @@ const staticPaths = [
   "/privacy-policy",
 ] as const;
 
-const buildDate = new Date();
-
 export default function sitemap(): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = [];
   const seen = new Set<string>();
@@ -24,7 +22,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   function add(url: string, priority: number, changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"]) {
     if (seen.has(url)) return;
     seen.add(url);
-    entries.push({ url, lastModified: buildDate, changeFrequency, priority });
+    entries.push({ url, changeFrequency, priority });
   }
 
   for (const locale of locales) {
