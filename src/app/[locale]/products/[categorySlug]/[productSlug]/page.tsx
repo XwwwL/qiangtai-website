@@ -11,6 +11,7 @@ import { siteConfig } from "@/config/site";
 import { localized, localizedArr } from "@/lib/utils";
 import { StructuredData } from "@/components/seo/StructuredData";
 import { ProductCard } from "@/components/products/ProductCard";
+import { ProductGallery } from "@/components/products/ProductGallery";
 
 interface Props { params: { locale: string; categorySlug: string; productSlug: string } }
 
@@ -77,13 +78,7 @@ export default function ProductDetailPage({ params }: Props) {
       <section className="py-10 md:py-14 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-            <div className="relative aspect-square bg-gray-50 rounded-xl overflow-hidden metallic-card">
-              {product.image ? (
-                <Image src={product.image} alt={displayName} fill className="object-contain p-8" sizes="(max-width: 1024px) 100vw, 50vw" priority />
-              ) : (
-                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-navy-800 via-industrial-600 to-teal-600"><p className="text-white/50 text-lg">{dict.productDetail.productImageComing}</p></div>
-              )}
-            </div>
+            <ProductGallery gallery={product.gallery} alt={displayName} />
             <div>
               <span className="text-sm text-tech-500 font-medium">{displaySubtitle}</span>
               <h1 className="text-2xl md:text-3xl font-extrabold text-navy-900 mt-1 mb-3">{displayName}</h1>
