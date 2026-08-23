@@ -12,8 +12,8 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product, locale = "en" }: ProductCardProps) {
-  const displayName = localized(product.name, product.nameZh, product.nameRu, locale);
-  const displayDesc = localized(product.shortDescription, product.shortDescriptionZh || "", product.shortDescriptionRu || "", locale);
+  const displayName = localized(product.name, product.nameZh, product.nameRu, product.nameJa, product.nameKo, locale);
+  const displayDesc = localized(product.shortDescription, product.shortDescriptionZh || "", product.shortDescriptionRu || "", product.shortDescriptionJa || "", product.shortDescriptionKo || "", locale);
   const viewDetails = locale === "zh" ? "查看详情" : locale === "ru" ? "Подробнее" : "View Details";
 
   return (

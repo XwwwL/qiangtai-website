@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const cat = getCategoryBySlug(slug);
   if (!cat) return { title: "Not Found" };
   const l = locale as Locale;
-  const title = localized(cat.seoTitle, cat.seoTitleZh, cat.seoTitleRu, l);
-  const desc = localized(cat.seoDescription, cat.seoDescriptionZh, cat.seoDescriptionRu, l);
+  const title = localized(cat.seoTitle, cat.seoTitleZh, cat.seoTitleRu, cat.seoTitleJa, cat.seoTitleKo, l);
+  const desc = localized(cat.seoDescription, cat.seoDescriptionZh, cat.seoDescriptionRu, cat.seoDescriptionJa, cat.seoDescriptionKo, l);
   const prefix = l === "en" ? "" : `/${locale}`;
   const baseUrl = `${siteConfig.siteUrl}${prefix}/products/${slug}`;
   return {
@@ -55,13 +55,13 @@ export default function CategoryPage({ params }: Props) {
   const cat = getCategoryBySlug(slug);
   if (!cat) notFound();
   const products = getProductsByCategory(slug);
-  const displayName = localized(cat.name, cat.nameZh, cat.nameRu, l);
-  const displayDesc = localized(cat.description, cat.descriptionZh, cat.descriptionRu, l);
-  const displayShort = localized(cat.shortDescription, cat.shortDescriptionZh, cat.shortDescriptionRu, l);
-  const displayFeatures = localizedArr(cat.features, cat.featuresZh, cat.featuresRu, l);
-  const displayMaterials = localizedArr(cat.materials, cat.materialsZh, cat.materialsRu, l);
-  const displayConnTypes = localizedArr(cat.connectionTypes, cat.connectionTypesZh, cat.connectionTypesRu, l);
-  const displayApps = localizedArr(cat.applications, cat.applicationsZh, cat.applicationsRu, l);
+  const displayName = localized(cat.name, cat.nameZh, cat.nameRu, cat.nameJa, cat.nameKo, l);
+  const displayDesc = localized(cat.description, cat.descriptionZh, cat.descriptionRu, cat.descriptionJa, cat.descriptionKo, l);
+  const displayShort = localized(cat.shortDescription, cat.shortDescriptionZh, cat.shortDescriptionRu, cat.shortDescriptionJa, cat.shortDescriptionKo, l);
+  const displayFeatures = localizedArr(cat.features, cat.featuresZh, cat.featuresRu, cat.featuresJa, cat.featuresKo, l);
+  const displayMaterials = localizedArr(cat.materials, cat.materialsZh, cat.materialsRu, cat.materialsJa, cat.materialsKo, l);
+  const displayConnTypes = localizedArr(cat.connectionTypes, cat.connectionTypesZh, cat.connectionTypesRu, cat.connectionTypesJa, cat.connectionTypesKo, l);
+  const displayApps = localizedArr(cat.applications, cat.applicationsZh, cat.applicationsRu, cat.applicationsJa, cat.applicationsKo, l);
 
   return (
     <>
@@ -116,7 +116,7 @@ export default function CategoryPage({ params }: Props) {
       <section className="py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-xl font-bold text-navy-900 mb-6">{dict.categoryPage.relatedCategories}</h2>
-          <div className="flex flex-wrap gap-3">{productCategories.filter((c) => c.slug !== cat.slug).slice(0, 6).map((rc) => (<Link key={rc.slug} href={`/${locale}/products/${rc.slug}`} className="px-4 py-2 bg-gray-50 hover:bg-teal-50 text-sm text-navy-900 hover:text-tech-500 rounded-lg transition-colors border border-gray-100 hover:border-tech-500/20">{localized(rc.name, rc.nameZh, rc.nameRu, l)}</Link>))}</div>
+          <div className="flex flex-wrap gap-3">{productCategories.filter((c) => c.slug !== cat.slug).slice(0, 6).map((rc) => (<Link key={rc.slug} href={`/${locale}/products/${rc.slug}`} className="px-4 py-2 bg-gray-50 hover:bg-teal-50 text-sm text-navy-900 hover:text-tech-500 rounded-lg transition-colors border border-gray-100 hover:border-tech-500/20">{localized(rc.name, rc.nameZh, rc.nameRu, rc.nameJa, rc.nameKo, l)}</Link>))}</div>
         </div>
       </section>
 

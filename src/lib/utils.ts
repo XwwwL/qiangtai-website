@@ -1,19 +1,41 @@
 import type { Locale } from "@/types";
 
 /** Get localized text: en fallback if zh/ru/ja/ko missing */
-export function localized(en: string, zh?: string, ru?: string, locale?: Locale): string {
+export function localized(
+  en: string,
+  zh?: string,
+  ru?: string,
+  ja?: string,
+  ko?: string,
+  locale?: Locale
+): string {
   const l = locale || "en";
-  if (l === "zh" && zh) return zh;
-  if (l === "ru") return ru || en;
-  // ja/ko fall back to English (no dedicated product data yet)
-  return en;
+  switch (l) {
+    case "zh": return zh || en;
+    case "ru": return ru || en;
+    case "ja": return ja || en;
+    case "ko": return ko || en;
+    default: return en;
+  }
 }
 
 /** Get localized string array */
-export function localizedArr(enArr: string[], zhArr: string[], ruArr: string[], locale: Locale): string[] {
-  if (locale === "zh" && zhArr.length > 0) return zhArr;
-  if (locale === "ru" && ruArr.length > 0) return ruArr;
-  return enArr;
+export function localizedArr(
+  enArr: string[],
+  zhArr?: string[],
+  ruArr?: string[],
+  jaArr?: string[],
+  koArr?: string[],
+  locale?: Locale
+): string[] {
+  const l = locale || "en";
+  switch (l) {
+    case "zh": return zhArr && zhArr.length > 0 ? zhArr : enArr;
+    case "ru": return ruArr && ruArr.length > 0 ? ruArr : enArr;
+    case "ja": return jaArr && jaArr.length > 0 ? jaArr : enArr;
+    case "ko": return koArr && koArr.length > 0 ? koArr : enArr;
+    default: return enArr;
+  }
 }
 
 /**

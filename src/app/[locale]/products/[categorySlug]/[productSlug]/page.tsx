@@ -28,8 +28,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const l = locale as Locale;
   const prefix = l === "en" ? "" : `/${locale}`;
   const baseUrl = `${siteConfig.siteUrl}${prefix}/products/${categorySlug}/${productSlug}`;
-  const title = localized(prod.seoTitle, prod.seoTitleZh || `${prod.nameZh} | ${siteConfig.companyNameShort}`, prod.seoTitleRu, l);
-  const desc = localized(prod.seoDescription, prod.seoDescriptionZh, prod.seoDescriptionRu, l);
+  const title = localized(prod.seoTitle, prod.seoTitleZh || `${prod.nameZh} | ${siteConfig.companyNameShort}`, prod.seoTitleRu, prod.seoTitleJa, prod.seoTitleKo, l);
+  const desc = localized(prod.seoDescription, prod.seoDescriptionZh, prod.seoDescriptionRu, prod.seoDescriptionJa, prod.seoDescriptionKo, l);
   return {
     title: title || prod.name,
     description: desc || prod.shortDescription,
@@ -57,13 +57,13 @@ export default function ProductDetailPage({ params }: Props) {
   const category = getCategoryBySlug(categorySlug);
   const relatedProducts = getRelatedProducts(product.slug, categorySlug, 4);
 
-  const displayName = localized(product.name, product.nameZh, product.nameRu, l);
-  const displaySubtitle = localized(product.name, product.nameZh, product.nameRu, l === "zh" ? "en" : "zh");
-  const displayDesc = localized(product.description, product.descriptionZh, product.descriptionRu, l);
-  const displayFeatures = localizedArr(product.features, product.featuresZh || [], product.featuresRu || [], l);
-  const displayMaterials = localizedArr(product.materials, product.materialsZh || [], product.materialsRu || [], l);
-  const displayApps = localizedArr(product.applications, product.applicationsZh || [], product.applicationsRu || [], l);
-  const displayPackaging = localized(product.packaging, product.packagingZh, product.packagingRu, l);
+  const displayName = localized(product.name, product.nameZh, product.nameRu, product.nameJa, product.nameKo, l);
+  const displaySubtitle = localized(product.name, product.nameZh, product.nameRu, product.nameJa, product.nameKo, l === "zh" ? "en" : "zh");
+  const displayDesc = localized(product.description, product.descriptionZh, product.descriptionRu, product.descriptionJa, product.descriptionKo, l);
+  const displayFeatures = localizedArr(product.features, product.featuresZh || [], product.featuresRu || [], product.featuresJa || [], product.featuresKo || [], l);
+  const displayMaterials = localizedArr(product.materials, product.materialsZh || [], product.materialsRu || [], product.materialsJa || [], product.materialsKo || [], l);
+  const displayApps = localizedArr(product.applications, product.applicationsZh || [], product.applicationsRu || [], product.applicationsJa || [], product.applicationsKo || [], l);
+  const displayPackaging = localized(product.packaging, product.packagingZh, product.packagingRu, product.packagingJa, product.packagingKo, l);
 
   const productSchema = { "@context": "https://schema.org", "@type": "Product", name: displayName, description: product.shortDescription, url: `${siteConfig.siteUrl}/${locale}/products/${product.categorySlug}/${product.slug}`, manufacturer: { "@type": "Organization", name: siteConfig.companyName }, ...(product.image && { image: `${siteConfig.siteUrl}${product.image}` }) };
 

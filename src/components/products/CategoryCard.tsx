@@ -12,8 +12,8 @@ interface CategoryCardProps {
 }
 
 export function CategoryCard({ category, locale = "en" }: CategoryCardProps) {
-  const displayName = localized(category.name, category.nameZh, category.nameRu, locale);
-  const displayDesc = localized(category.shortDescription, category.shortDescriptionZh, category.shortDescriptionRu, locale);
+  const displayName = localized(category.name, category.nameZh, category.nameRu, category.nameJa, category.nameKo, locale);
+  const displayDesc = localized(category.shortDescription, category.shortDescriptionZh, category.shortDescriptionRu, category.shortDescriptionJa, category.shortDescriptionKo, locale);
   const countLabel = locale === "zh" ? "款产品" : locale === "ru" ? "изделий" : "Products";
   const comingSoon = locale === "zh" ? "即将推出" : locale === "ru" ? "Скоро" : "Coming Soon";
   const viewLabel = locale === "zh" ? "查看产品" : locale === "ru" ? "Смотреть" : "View Products";
