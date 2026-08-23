@@ -1,5 +1,5 @@
 // ── Locale ────────────────────────────────────────────────────
-export type Locale = "en" | "zh" | "ru";
+export type Locale = "en" | "zh" | "ru" | "ja" | "ko";
 
 // ── Product Category ──────────────────────────────────────────
 export interface ProductCategory {

@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
     formatDetection: { email: false, address: false, telephone: false },
     openGraph: {
       type: "website",
-      locale: lang === "zh-CN" ? "zh_CN" : lang === "ru" ? "ru_RU" : "en_US",
+      locale: lang === "zh-CN" ? "zh_CN" : lang === "ru" ? "ru_RU" : lang === "ja" ? "ja_JP" : lang === "ko" ? "ko_KR" : "en_US",
       url: baseUrl,
       siteName: siteConfig.companyNameShort,
       title: dict.seo.defaultTitle,
@@ -53,6 +53,8 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
         en: siteConfig.siteUrl,
         "zh-CN": `${siteConfig.siteUrl}/zh`,
         ru: `${siteConfig.siteUrl}/ru`,
+        ja: `${siteConfig.siteUrl}/ja`,
+        ko: `${siteConfig.siteUrl}/ko`,
         "x-default": siteConfig.siteUrl,
       },
     },

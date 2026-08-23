@@ -1,9 +1,8 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import { CheckCircle, Send } from "lucide-react";
-import { isValidLocale, type Locale } from "@/i18n/config";
+import { isValidLocale, locales, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getCategoryBySlug } from "@/data/categories";
 import { getProductByCategoryAndSlug, getRelatedProducts, products } from "@/data/products";
@@ -16,11 +15,9 @@ import { ProductGallery } from "@/components/products/ProductGallery";
 interface Props { params: { locale: string; categorySlug: string; productSlug: string } }
 
 export async function generateStaticParams() {
-  return products.flatMap((p) => [
-    { locale: "en", categorySlug: p.categorySlug, productSlug: p.slug },
-    { locale: "zh", categorySlug: p.categorySlug, productSlug: p.slug },
-    { locale: "ru", categorySlug: p.categorySlug, productSlug: p.slug },
-  ]);
+  return products.flatMap((p) =>
+    locales.map((locale) => ({ locale, categorySlug: p.categorySlug, productSlug: p.slug }))
+  );
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -42,6 +39,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         en: `${siteConfig.siteUrl}/products/${categorySlug}/${productSlug}`,
         "zh-CN": `${siteConfig.siteUrl}/zh/products/${categorySlug}/${productSlug}`,
         ru: `${siteConfig.siteUrl}/ru/products/${categorySlug}/${productSlug}`,
+        ja: `${siteConfig.siteUrl}/ja/products/${categorySlug}/${productSlug}`,
+        ko: `${siteConfig.siteUrl}/ko/products/${categorySlug}/${productSlug}`,
         "x-default": `${siteConfig.siteUrl}/products/${categorySlug}/${productSlug}`,
       },
     },

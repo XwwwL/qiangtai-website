@@ -3,7 +3,7 @@ import { productCategories } from "@/data/categories";
 import { products } from "@/data/products";
 
 const DOMAIN = "https://www.zj-qiangtai.com";
-const locales = ["en", "zh", "ru"] as const;
+const locales = ["en", "zh", "ru", "ja", "ko"] as const;
 
 const staticPaths = [
   "/products",

@@ -1,10 +1,11 @@
 import type { Locale } from "@/types";
 
-/** Get localized text: en fallback if zh/ru missing */
+/** Get localized text: en fallback if zh/ru/ja/ko missing */
 export function localized(en: string, zh?: string, ru?: string, locale?: Locale): string {
   const l = locale || "en";
   if (l === "zh" && zh) return zh;
   if (l === "ru") return ru || en;
+  // ja/ko fall back to English (no dedicated product data yet)
   return en;
 }
 

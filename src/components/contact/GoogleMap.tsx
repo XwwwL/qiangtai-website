@@ -30,10 +30,26 @@ const contentByLocale = {
     directions: "Построить маршрут",
     mapTitle: "Местоположение Zhejiang Qiangtai Pipe Fitting & Valve Co., Ltd.",
   },
+  ja: {
+    eyebrow: "所在地",
+    company: "Zhejiang Qiangtai Pipe Fitting & Valve Co., Ltd.",
+    description: "海外のバイヤー、ディストリビューター、ビジネスパートナーの皆様のお問い合わせをお待ちしております。",
+    viewMap: "Googleマップで見る",
+    directions: "ルートを取得",
+    mapTitle: "Zhejiang Qiangtai Pipe Fitting & Valve Co., Ltd.の所在地",
+  },
+  ko: {
+    eyebrow: "위치",
+    company: "Zhejiang Qiangtai Pipe Fitting & Valve Co., Ltd.",
+    description: "해외 바이어, 유통업체, 비즈니스 파트너의 문의를 환영합니다.",
+    viewMap: "Google 지도에서 보기",
+    directions: "경로 보기",
+    mapTitle: "Zhejiang Qiangtai Pipe Fitting & Valve Co., Ltd. 위치",
+  },
 } as const;
 
 export function GoogleMap({ locale }: GoogleMapProps) {
-  const content = contentByLocale[locale];
+  const content = contentByLocale[locale] ?? contentByLocale.en;
   const { latitude, longitude } = siteConfig.location;
   const coordinates = `${latitude},${longitude}`;
 
