@@ -22,8 +22,8 @@ export const siteConfig: SiteConfig = {
   phone4: "+86-13017890588",
   phone4Display: "+86 130 1789 0588",
 
-  address: "No. 768, Binhai 2nd Road, Longwan District, Wenzhou, Zhejiang, China",
-  addressZh: "浙江省温州市龙湾区滨海二道768号",
+  address: "No. 768, Binhai 2nd Road, Xinghai Street, Longwan District, Wenzhou, Zhejiang, China",
+  addressZh: "浙江省温州市龙湾区星海街道滨海二道768号",
   zipCode: "325025",
 
   founded: "Established in Wenzhou, China",
@@ -31,13 +31,13 @@ export const siteConfig: SiteConfig = {
 
   // ── Location ──────────────────────────────────────────────
   location: {
-    latitude: 27.884339151323392,
-    longitude: 120.80763918556248,
-    coordinates: "27.884339151323392,120.80763918556248",
+    latitude: 27.863242251119342,
+    longitude: 120.81281072642643,
+    coordinates: "27.863242251119342,120.81281072642643",
     googleMapsSearchUrl:
-      "https://www.google.com/maps/search/?api=1&query=27.884339151323392%2C120.80763918556248",
+      "https://www.google.com/maps/search/?api=1&query=27.863242251119342%2C120.81281072642643",
     googleMapsDirectionsUrl:
-      "https://www.google.com/maps/dir/?api=1&destination=27.884339151323392%2C120.80763918556248",
+      "https://www.google.com/maps/dir/?api=1&destination=27.863242251119342%2C120.81281072642643",
   },
 
   siteUrl: "https://www.zj-qiangtai.com",

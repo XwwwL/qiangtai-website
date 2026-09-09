@@ -21,7 +21,7 @@ const organizationSchema = {
   },
   address: {
     "@type": "PostalAddress",
-    streetAddress: "No. 768, Binhai 2nd Road",
+    streetAddress: "No. 768, Binhai 2nd Road, Xinghai Street",
     addressLocality: "Wenzhou",
     addressRegion: "Zhejiang",
     postalCode: siteConfig.zipCode,
